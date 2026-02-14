@@ -1,6 +1,7 @@
-FROM golang:1.21-alpine AS build
+FROM golang:1.24-alpine AS build
 WORKDIR /app
-COPY go.mod ./
+COPY go.mod go.sum ./
+RUN go mod download
 COPY *.go ./
 RUN go build -o blobstore .
 

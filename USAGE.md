@@ -10,13 +10,15 @@ kubectl get svc blobstore
 ```
 curl http://<EXTERNAL-IP>:8080/fortune
 
-curl -X POST http://<EXTERNAL-IP>:8080/login
+curl -X POST -d 'username=alice&password=secret' http://<EXTERNAL-IP>:8080/register
 
-curl http://<EXTERNAL-IP>:8080/get?key=mykey
+curl -c cookies.txt -X POST -d 'username=alice&password=secret' http://<EXTERNAL-IP>:8080/login
 
-curl -X POST -d 'value=myvalue' http://<EXTERNAL-IP>:8080/put?key=mykey
+curl -b cookies.txt -X POST -d 'value=s3://bucket/obj' http://<EXTERNAL-IP>:8080/put?key=mykey
 
-curl -X DELETE http://<EXTERNAL-IP>:8080/delete?key=mykey
+curl -b cookies.txt http://<EXTERNAL-IP>:8080/get?key=mykey
+
+curl -b cookies.txt -X DELETE http://<EXTERNAL-IP>:8080/delete?key=mykey
 ```
 
 ## MinIO Console

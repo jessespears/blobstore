@@ -1,7 +1,7 @@
 .PHONY: start stop status delete build run
 
 build:
-	minikube image build -t blobstore:latest -f ./src/Dockerfile ./src
+	eval $$(minikube docker-env) && docker build -t blobstore:latest -f ./src/Dockerfile ./src
 
 start:
 	minikube start
@@ -24,5 +24,6 @@ delete:
 	minikube delete
 
 run:
+	$(MAKE) start
 	cat USAGE.md
 	minikube tunnel
